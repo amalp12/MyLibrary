@@ -1,0 +1,2 @@
+Name: Pappu 	Marks = 22
+Name: Raju 	Marks = 33
