@@ -12,7 +12,7 @@ struct queue_linked_node
     queue_linked_node_ptr next;
 };
 
-int isEmpty(queue_linked_node_ptr * list)
+int queue_linked_isEmpty(queue_linked_node_ptr * list)
 {
     return ((*list)==NULL);
 }
@@ -23,7 +23,7 @@ queue_linked_node_ptr create_node(int key)
     new_node->next = NULL;
     return new_node;
 }
-queue_linked_node_ptr list_search(queue_linked_node_ptr * list, int k)
+queue_linked_node_ptr queue_linked_list_search(queue_linked_node_ptr * list, int k)
 {
     queue_linked_node_ptr ptr = *list;
     while(ptr!=NULL)
@@ -33,9 +33,9 @@ queue_linked_node_ptr list_search(queue_linked_node_ptr * list, int k)
     }
     return ptr;
 }
-void list_insert_front(queue_linked_node_ptr* list, queue_linked_node_ptr x)
+void queue_linked_list_insert_front(queue_linked_node_ptr* list, queue_linked_node_ptr x)
 {
-    if(isEmpty(list))
+    if(queue_linked_isEmpty(list))
     {
         *list = x;
     }
@@ -45,10 +45,10 @@ void list_insert_front(queue_linked_node_ptr* list, queue_linked_node_ptr x)
         *list = x;
     }
 }
-void list_insert_tail(queue_linked_node_ptr* list, queue_linked_node_ptr x)
+void queue_linked_list_insert_tail(queue_linked_node_ptr* list, queue_linked_node_ptr x)
 {
     
-    if(isEmpty(list))
+    if(queue_linked_isEmpty(list))
     {
         *list = x; return;
     }
@@ -59,9 +59,9 @@ void list_insert_tail(queue_linked_node_ptr* list, queue_linked_node_ptr x)
     }
     ptr->next = x;
 }
-void list_insert_after(queue_linked_node_ptr* list,queue_linked_node_ptr x,queue_linked_node_ptr y)
+void queue_linked_list_insert_after(queue_linked_node_ptr* list,queue_linked_node_ptr x,queue_linked_node_ptr y)
 {
-    queue_linked_node_ptr y_adress = list_search(list, y->key);
+    queue_linked_node_ptr y_adress = queue_linked_list_search(list, y->key);
     if(y_adress!=NULL)
     {
         x->next = y_adress->next;// setting new node's next
@@ -70,9 +70,9 @@ void list_insert_after(queue_linked_node_ptr* list,queue_linked_node_ptr x,queue
     } 
 }
 
-void list_insert_before(queue_linked_node_ptr* list,queue_linked_node_ptr x,queue_linked_node_ptr y)
+void queue_linked_list_insert_before(queue_linked_node_ptr* list,queue_linked_node_ptr x,queue_linked_node_ptr y)
 {
-    queue_linked_node_ptr y_adress = list_search(list, y->key);
+    queue_linked_node_ptr y_adress = queue_linked_list_search(list, y->key);
     if(y_adress!=NULL)
     {
         x->next = y_adress->next;// setting new node's next
@@ -83,9 +83,9 @@ void list_insert_before(queue_linked_node_ptr* list,queue_linked_node_ptr x,queu
 
     } 
 }
-void list_delete(queue_linked_node_ptr* list,queue_linked_node_ptr x)
+void queue_linked_list_delete(queue_linked_node_ptr* list,queue_linked_node_ptr x)
 {
-    if(isEmpty(list))
+    if(queue_linked_isEmpty(list))
     {
         printf("-1\n");
         return;
@@ -131,9 +131,9 @@ void list_delete(queue_linked_node_ptr* list,queue_linked_node_ptr x)
     }
     printf("-1\n");
 }
-void list_delete_first(queue_linked_node_ptr * list)
+void queue_linked_list_delete_first(queue_linked_node_ptr * list)
 {
-    if(isEmpty(list))
+    if(queue_linked_isEmpty(list))
     {
         printf("-1\n");
         return;
@@ -141,9 +141,9 @@ void list_delete_first(queue_linked_node_ptr * list)
     printf("%d\n", (*list)->key);
     (*list)= (*list)->next;
 }
-void list_delete_last(queue_linked_node_ptr * list)
+void queue_linked_list_delete_last(queue_linked_node_ptr * list)
 {
-    if(isEmpty(list))
+    if(queue_linked_isEmpty(list))
     {
         printf("-1\n");
         return;
@@ -162,9 +162,9 @@ void list_delete_last(queue_linked_node_ptr * list)
     printf("%d\n", ptr->next->key);
     ptr->next = NULL;
 }
-void print_list(queue_linked_node_ptr *list)
+void queue_linked_print_list(queue_linked_node_ptr *list)
 {
-    if(isEmpty(list))
+    if(queue_linked_isEmpty(list))
     {
         printf("NULL\n");
         return;
@@ -178,21 +178,21 @@ void print_list(queue_linked_node_ptr *list)
     printf("\n");
 }
 
-void QueueEmpty(queue_linked_node_ptr *list)
+void queue_linked_QueueEmpty(queue_linked_node_ptr *list)
 {
-    int bool =  isEmpty(list);
+    int bool =  queue_linked_isEmpty(list);
     if (bool) bool = -1;
     else bool = 1;
     printf("%d\n", bool);
 }
-void Enqueue(queue_linked_node_ptr* list, queue_linked_node_ptr x)
+void queue_linked_Enqueue(queue_linked_node_ptr* list, queue_linked_node_ptr x)
 {
-    list_insert_tail( list, x);
+    queue_linked_list_insert_tail( list, x);
 }
 
-void Dequeue(queue_linked_node_ptr * list)
+void queue_linked_Dequeue(queue_linked_node_ptr * list)
 {
-    list_delete_first(list);
+    queue_linked_list_delete_first(list);
 }
 int main() 
 {
@@ -208,15 +208,15 @@ int main()
 
                 scanf(" %d", &k);
                 queue_linked_node_ptr x = create_node(k);
-                Enqueue(&head,x);
+                queue_linked_Enqueue(&head,x);
                 break;
             
             case 'd':
-                Dequeue(&head);
+                queue_linked_Dequeue(&head);
                 break;
 
             case 'e':
-                QueueEmpty(&head);
+                queue_linked_QueueEmpty(&head);
                 
                 break;
            
