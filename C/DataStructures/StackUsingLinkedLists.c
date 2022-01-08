@@ -4,28 +4,28 @@
 #include <string.h>
 #define INT_MAX  2147483647
 typedef long int li;
-typedef struct node * node_ptr;
+typedef struct stack_linked_node * stack_linked_node_ptr;
 
-struct node
+struct stack_linked_node
 {
     int key ;
-    node_ptr next;
+    stack_linked_node_ptr next;
 };
 
-int isEmpty(node_ptr * list)
+int stack_linked_isEmpty(stack_linked_node_ptr * list)
 {
     return ((*list)==NULL);
 }
-node_ptr create_node(int key)
+stack_linked_node_ptr stack_linked_create_node(int key)
 {
-    node_ptr new_node = (node_ptr)malloc(sizeof(struct node));
+    stack_linked_node_ptr new_node = (stack_linked_node_ptr)malloc(sizeof(struct stack_linked_node));
     new_node->key = key;
     new_node->next = NULL;
     return new_node;
 }
-node_ptr list_search(node_ptr * list, int k)
+stack_linked_node_ptr stack_linked_list_search(stack_linked_node_ptr * list, int k)
 {
-    node_ptr ptr = *list;
+    stack_linked_node_ptr ptr = *list;
     while(ptr!=NULL)
     {
         if(ptr->key==k) return ptr;
@@ -33,9 +33,9 @@ node_ptr list_search(node_ptr * list, int k)
     }
     return ptr;
 }
-void list_insert_front(node_ptr* list, node_ptr x)
+void stack_linked_list_insert_front(stack_linked_node_ptr* list, stack_linked_node_ptr x)
 {
-    if(isEmpty(list))
+    if(stack_linked_isEmpty(list))
     {
         *list = x;
     }
@@ -45,23 +45,23 @@ void list_insert_front(node_ptr* list, node_ptr x)
         *list = x;
     }
 }
-void list_insert_tail(node_ptr* list, node_ptr x)
+void stack_linked_list_insert_tail(stack_linked_node_ptr* list, stack_linked_node_ptr x)
 {
     
-    if(isEmpty(list))
+    if(stack_linked_isEmpty(list))
     {
         *list = x; return;
     }
-    node_ptr ptr = *list;
+    stack_linked_node_ptr ptr = *list;
     while(ptr->next!=NULL)
     {
         ptr = ptr->next;
     }
     ptr->next = x;
 }
-void list_insert_after(node_ptr* list,node_ptr x,node_ptr y)
+void stack_linked_list_insert_after(stack_linked_node_ptr* list,stack_linked_node_ptr x,stack_linked_node_ptr y)
 {
-    node_ptr y_adress = list_search(list, y->key);
+    stack_linked_node_ptr y_adress = stack_linked_list_search(list, y->key);
     if(y_adress!=NULL)
     {
         x->next = y_adress->next;// setting new node's next
@@ -70,9 +70,9 @@ void list_insert_after(node_ptr* list,node_ptr x,node_ptr y)
     } 
 }
 
-void list_insert_before(node_ptr* list,node_ptr x,node_ptr y)
+void stack_linked_list_insert_before(stack_linked_node_ptr* list,stack_linked_node_ptr x,stack_linked_node_ptr y)
 {
-    node_ptr y_adress = list_search(list, y->key);
+    stack_linked_node_ptr y_adress = stack_linked_list_search(list, y->key);
     if(y_adress!=NULL)
     {
         x->next = y_adress->next;// setting new node's next
@@ -83,14 +83,14 @@ void list_insert_before(node_ptr* list,node_ptr x,node_ptr y)
 
     } 
 }
-void list_delete(node_ptr* list,node_ptr x)
+void stack_linked_list_delete(stack_linked_node_ptr* list,stack_linked_node_ptr x)
 {
-    if(isEmpty(list))
+    if(stack_linked_isEmpty(list))
     {
         printf("-1\n");
         return;
     }
-    node_ptr ptr = *list;
+    stack_linked_node_ptr ptr = *list;
     // checking if last element 
     if(ptr->next== NULL)
     {
@@ -131,9 +131,9 @@ void list_delete(node_ptr* list,node_ptr x)
     }
     printf("-1\n");
 }
-void list_delete_first(node_ptr * list)
+void stack_linked_list_delete_first(stack_linked_node_ptr * list)
 {
-    if(isEmpty(list))
+    if(stack_linked_isEmpty(list))
     {
         printf("-1\n");
         return;
@@ -141,14 +141,14 @@ void list_delete_first(node_ptr * list)
     printf("%d\n", (*list)->key);
     (*list)= (*list)->next;
 }
-void list_delete_last(node_ptr * list)
+void stack_linked_list_delete_last(stack_linked_node_ptr * list)
 {
-    if(isEmpty(list))
+    if(stack_linked_isEmpty(list))
     {
         printf("-1\n");
         return;
     }
-    node_ptr ptr = *list;
+    stack_linked_node_ptr ptr = *list;
     if(ptr->next==NULL)
     {
         printf("%d\n", ptr->key);
@@ -162,14 +162,14 @@ void list_delete_last(node_ptr * list)
     printf("%d\n", ptr->next->key);
     ptr->next = NULL;
 }
-void print_list(node_ptr *list)
+void stack_linked_print_list(stack_linked_node_ptr *list)
 {
-    if(isEmpty(list))
+    if(stack_linked_isEmpty(list))
     {
         printf("NULL\n");
         return;
     }
-    node_ptr ptr = *list;
+    stack_linked_node_ptr ptr = *list;
     while(ptr!=NULL)
     {
         printf("%d ", ptr->key);
@@ -178,26 +178,26 @@ void print_list(node_ptr *list)
     printf("\n");
 }
 
-void StackEmpty(node_ptr *list)
+void stack_linked_StackEmpty(stack_linked_node_ptr *list)
 {
-    int bool =  isEmpty(list);
+    int bool =  stack_linked_isEmpty(list);
     if (bool) bool = -1;
     else bool = 1;
     printf("%d\n", bool);
 }
-void push(node_ptr* list, node_ptr x)
+void stack_linked_push(stack_linked_node_ptr* list, stack_linked_node_ptr x)
 {
-    list_insert_tail( list, x);
+    stack_linked_list_insert_tail( list, x);
 }
 
-void pop(node_ptr * list)
+void stack_linked_pop(stack_linked_node_ptr * list)
 {
-    list_delete_last(list);
+    stack_linked_list_delete_last(list);
 }
 int main() 
 {
     char in; int k ,x_key , y_key;
-    node_ptr head = NULL,x,y; // initalizing head to null
+    stack_linked_node_ptr head = NULL,x,y; // initalizing head to null
     while(1)
     {
         scanf(" %c", &in);
@@ -207,16 +207,16 @@ int main()
             case 'i':
 
                 scanf(" %d", &k);
-                node_ptr x = create_node(k);
-                push(&head,x);
+                stack_linked_node_ptr x = stack_linked_create_node(k);
+                stack_linked_push(&head,x);
                 break;
             
             case 'd':
-                pop(&head);
+                stack_linked_pop(&head);
                 break;
 
             case 'e':
-                StackEmpty  (&head);
+                stack_linked_StackEmpty(&head);
                 
                 break;
            
@@ -229,4 +229,3 @@ int main()
     }
 	return 0;
 }
-
