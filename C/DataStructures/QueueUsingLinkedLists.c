@@ -16,7 +16,7 @@ int queue_linked_isEmpty(queue_linked_node_ptr * list)
 {
     return ((*list)==NULL);
 }
-queue_linked_node_ptr create_node(int key)
+queue_linked_node_ptr queue_linked_create_node(int key)
 {
     queue_linked_node_ptr new_node = (queue_linked_node_ptr)malloc(sizeof(struct queue_linked_node));
     new_node->key = key;
@@ -207,7 +207,7 @@ int main()
             case 'i':
 
                 scanf(" %d", &k);
-                queue_linked_node_ptr x = create_node(k);
+                queue_linked_node_ptr x = queue_linked_create_node(k);
                 queue_linked_Enqueue(&head,x);
                 break;
             
