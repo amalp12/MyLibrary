@@ -164,7 +164,7 @@ tree_node_ptr get_sucessor(tree_node_ptr root, int data)
                 else
                 {
                     sucessor = temp;
-                    temp = temp->right;
+                    temp = temp->left;
                 }
             }
             if (sucessor->data < search_result->data) return NULL;
