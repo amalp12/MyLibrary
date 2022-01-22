@@ -4,30 +4,30 @@
 #include <string.h>
 #define INT_MAX  2147483647
 typedef long int li;
-typedef struct node * node_ptr;
+typedef struct DoublyLLnode * DoublyLL_node_ptr;
 
-struct node
+struct DoublyLLnode
 {
     int key ;
-    node_ptr next;
-    node_ptr previous;
+    DoublyLL_node_ptr next;
+    DoublyLL_node_ptr previous;
 };
 
-int isEmpty(node_ptr * list)
+int DoublyLL_isEmpty(DoublyLL_node_ptr * list)
 {
     return ((*list)==NULL);
 }
-node_ptr create_node(int key)
+DoublyLL_node_ptr DoublyLL_create_node(int key)
 {
-    node_ptr new_node = (node_ptr)malloc(sizeof(struct node));
+    DoublyLL_node_ptr new_node = (DoublyLL_node_ptr)malloc(sizeof(struct DoublyLLnode));
     new_node->key = key;
     new_node->next = NULL;
     new_node->previous = NULL;
     return new_node;
 }
-node_ptr list_search(node_ptr * list, int k)
+DoublyLL_node_ptr DoublyLL_list_search(DoublyLL_node_ptr * list, int k)
 {
-    node_ptr ptr = *list;
+    DoublyLL_node_ptr ptr = *list;
     while(ptr!=NULL)
     {
         if(ptr->key==k) return ptr;
@@ -35,9 +35,9 @@ node_ptr list_search(node_ptr * list, int k)
     }
     return ptr;
 }
-void list_insert_front(node_ptr* list, node_ptr x)
+void DoublyLL_list_insert_front(DoublyLL_node_ptr* list, DoublyLL_node_ptr x)
 {
-    if(isEmpty(list))
+    if(DoublyLL_isEmpty(list))
     {
         *list = x;
     }
@@ -48,14 +48,14 @@ void list_insert_front(node_ptr* list, node_ptr x)
         *list = x;
     }
 }
-void list_insert_tail(node_ptr* list, node_ptr x)
+void DoublyLL_list_insert_tail(DoublyLL_node_ptr* list, DoublyLL_node_ptr x)
 {
     
-    if(isEmpty(list))
+    if(DoublyLL_isEmpty(list))
     {
         *list = x; return;
     }
-    node_ptr ptr = *list;
+    DoublyLL_node_ptr ptr = *list;
     while(ptr->next!=NULL)
     {
         ptr = ptr->next;
@@ -63,9 +63,9 @@ void list_insert_tail(node_ptr* list, node_ptr x)
     ptr->next = x;
     x->previous = ptr;
 }
-void list_insert_after(node_ptr* list,node_ptr x,node_ptr y)
+void DoublyLL_list_insert_after(DoublyLL_node_ptr* list,DoublyLL_node_ptr x,DoublyLL_node_ptr y)
 {
-    node_ptr y_address = list_search(list, y->key);
+    DoublyLL_node_ptr y_address = DoublyLL_list_search(list, y->key);
     if(y_address!=NULL)
     {
         x->next = y_address->next;// setting new node's next
@@ -75,9 +75,9 @@ void list_insert_after(node_ptr* list,node_ptr x,node_ptr y)
     } 
 }
 
-void list_insert_before(node_ptr* list,node_ptr x,node_ptr y)
+void DoublyLL_list_insert_before(DoublyLL_node_ptr* list,DoublyLL_node_ptr x,DoublyLL_node_ptr y)
 {
-    node_ptr y_address = list_search(list, y->key);
+    DoublyLL_node_ptr y_address = DoublyLL_list_search(list, y->key);
     if(y_address!=NULL)
     {
         x->previous = y_address->previous;
@@ -92,14 +92,14 @@ void list_insert_before(node_ptr* list,node_ptr x,node_ptr y)
 
     } 
 }
-void list_delete(node_ptr* list,node_ptr x)
+void DoublyLL_list_delete(DoublyLL_node_ptr* list,DoublyLL_node_ptr x)
 {
-    if(isEmpty(list))
+    if(DoublyLL_isEmpty(list))
     {
         printf("Not Found\n");
         return;
     }
-    node_ptr ptr = *list;
+    DoublyLL_node_ptr ptr = *list;
     // checking if last element 
     if(ptr->next== NULL)
     {
@@ -138,9 +138,9 @@ void list_delete(node_ptr* list,node_ptr x)
     }
     printf("Not Found\n");
 }
-void list_delete_initial(node_ptr * list)
+void DoublyLL_list_delete_initial(DoublyLL_node_ptr * list)
 {
-    if(isEmpty(list))
+    if(DoublyLL_isEmpty(list))
     {
         printf("Not Found\n");
         return;
@@ -149,14 +149,14 @@ void list_delete_initial(node_ptr * list)
     (*list)= (*list)->next;
     if((*list)!=NULL) (*list)->previous = NULL;
 }
-void list_delete_last(node_ptr * list)
+void DoublyLL_list_delete_last(DoublyLL_node_ptr * list)
 {
-    if(isEmpty(list))
+    if(DoublyLL_isEmpty(list))
     {
         printf("Not Found\n");
         return;
     }
-    node_ptr ptr = *list;
+    DoublyLL_node_ptr ptr = *list;
     if(ptr->next==NULL)
     {
         printf("%d\n", ptr->key);
@@ -170,9 +170,9 @@ void list_delete_last(node_ptr * list)
     printf("%d\n", ptr->next->key);
     ptr->next = NULL;
 }
-void print_reverse(node_ptr * list, int k )
+void DoublyLL_print_reverse(DoublyLL_node_ptr * list, int k )
 {
-    node_ptr k_address = list_search(list, k);
+    DoublyLL_node_ptr k_address = DoublyLL_list_search(list, k);
     if(k_address==NULL)
     {
         printf("Not Found\n");
@@ -185,9 +185,9 @@ void print_reverse(node_ptr * list, int k )
     }
     printf("\n");
 }
-void print_list(node_ptr *list)
+void DoublyLL_print_list(DoublyLL_node_ptr *list)
 {
-    node_ptr ptr = *list;
+    DoublyLL_node_ptr ptr = *list;
     while(ptr!=NULL)
     {
         printf("%d ", ptr->key);
@@ -199,7 +199,7 @@ int main()
 {
     int k ,x_key , y_key;
     char in ;
-    node_ptr head = NULL,x,y; // initalizing head to null
+    DoublyLL_node_ptr head = NULL,x,y; // initalizing head to null
     while(1)
     {
         scanf(" %c", &in);
@@ -209,40 +209,40 @@ int main()
             case 'f':
 
                 scanf("%d", &k);
-                node_ptr x = create_node(k);
-                list_insert_front(&head,x);
+                DoublyLL_node_ptr x = DoublyLLnode_create_node(k);
+                DoublyLLnode_list_insert_front(&head,x);
                 break;
 
             case 't':
                 scanf("%d", &k);
-                x = create_node(k);
-                list_insert_tail(&head,x);
+                x = DoublyLLnode_create_node(k);
+                DoublyLLnode_list_insert_tail(&head,x);
                 break;
             case 'a':
                 scanf("%d", &x_key); scanf("%d", &y_key);
-                x = create_node(x_key); y = create_node(y_key);
-                list_insert_after(&head,x,y);
+                x = DoublyLLnode_create_node(x_key); y = DoublyLLnode_create_node(y_key);
+                DoublyLLnode_list_insert_after(&head,x,y);
                 break;
             case 'b':
                 scanf("%d", &x_key); scanf("%d", &y_key);
-                x = create_node(x_key); y = create_node(y_key);
+                x = DoublyLLnode_create_node(x_key); y = DoublyLLnode_create_node(y_key);
                 list_insert_before(&head,x,y);
                 break;
 
             case 'd':
                 scanf("%d", &k);
-                x = create_node(k);
-                list_delete(&head, x);
+                x = DoublyLLnode_create_node(k);
+                DoublyLLnode_list_delete(&head, x);
                 break;
             case 'i':
-                list_delete_initial(&head);
+                DoublyLLnode_list_delete_initial(&head);
                 break;
             case 'l':
-                list_delete_last(&head);
+                DoublyLLnode_list_delete_last(&head);
                 break;
             case 'r':
                 scanf("%d", &k);
-                print_reverse(&head, k);
+                DoublyLLnode_print_reverse(&head, k);
                 break;
             case 'e':
                 return 0;
@@ -256,4 +256,3 @@ int main()
     }
 	return 0;
 }
-
