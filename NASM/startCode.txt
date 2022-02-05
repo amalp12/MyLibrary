@@ -1,0 +1,3 @@
+nasm -f elf file_name.asm
+ld -melf_i386 file_name.o -o file_name 
+./file_name

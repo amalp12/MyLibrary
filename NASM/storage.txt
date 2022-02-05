@@ -1,0 +1,95 @@
+
+section .data
+    message1: db 'Enter First Number to Add', 10
+    message1_length: equ $ - message1
+
+    message2: db 'Enter Second Number to Add', 10
+    message2_length: equ $ - message2
+
+
+
+section .bss
+    input_buffer : resb 1
+    number_1: resb 1
+    number_2: resb 1
+    sum: resb 1
+
+
+
+section .text
+global _start:
+    _start:
+
+    ; printing message1
+    mov eax , 4
+    mov ebx , 1
+    mov ecx , message1
+    mov edx , message1_length
+    int 80h
+
+    ; Taking first number input
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, number_1;
+    mov edx, 1;
+    int 80h
+   
+
+    ; Taking junk input
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, input_buffer;
+    mov edx, 1;
+    int 80h
+
+    ; printing message2
+    mov eax , 4
+    mov ebx , 1
+    mov ecx , message2
+    mov edx , message2_length
+    int 80h
+
+
+    ; Taking Second number input
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, number_2;
+    mov edx, 1;
+    int 80h
+
+    ; converting both numbers from ascci to integer
+    sub byte[number_1], 30h
+    sub byte[number_2], 30h
+
+    ; Adding two numbers
+    mov al, 0
+    add al, byte[number_1]
+    add al ,byte[number_2]
+
+    ; converting the result from integer to ascci
+    add al, 30h
+    
+    ; moving the result to the sum variable
+    mov byte[sum], al
+
+
+    ; printing the result
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, sum
+    mov edx, 1
+    int 80h
+
+    ; printing new line
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, 10
+    mov edx, 1
+    int 80h
+
+
+
+    ; exit call
+    mov eax , 1
+    mov ebx , 0
+    int 80h
