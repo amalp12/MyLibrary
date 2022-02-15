@@ -686,6 +686,26 @@ void PrintTree(BST_node_ptr root)
     parenthesisNotation(root);
     printf("\n");
 }
+
+int BST_isAVLTree(BST_node_ptr root)
+{
+    if(root == NULL)
+    {
+        return 1;
+    }
+    int left_height = BST_height(root->left);
+    int right_height = BST_height(root->right);
+    if(abs(left_height - right_height) <= 1)
+    {
+        return isAVL(root->left) && isAVL(root->right);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
 int main()
 {
     char in; int data;
