@@ -46,7 +46,9 @@ section .text
             pushad
             mov eax, message3
             call printString
+            popad
             call printInteger
+            pushad
             call printNewLine
             mov eax, message4
             call printString
