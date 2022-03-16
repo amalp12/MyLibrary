@@ -21,13 +21,7 @@ section .text
             call readString
             mov eax, string
             call countSpaces
-            add eax, 30h
-            mov dword[temp], eax
-            mov eax, 4
-            mov ebx, 1
-            mov ecx, temp
-            mov edx, 4
-            int 80h
+            call printInteger
             
             call exit
         ; input eax strings pointer output number of spaces eax
@@ -349,7 +343,100 @@ section .text
                 mov eax, ecx      
                 ret
 
+          printInteger:
+            call reverseInteger
+            call printIntegerBackwards
+            ret
+  
+        ; output print integer at eax
+        reverseInteger:
+            mov ecx, 0
+            
+            _reverseIntegerLoop:
 
+                ; eax has the integer to be printed backwards
+                mov ebx, 10
+                mov edx, 0  
+                div ebx
+
+                push edx; push the remainder
+                add ecx, 1; increment the counter
+
+                cmp eax, 0
+                jne _reverseIntegerLoop
+
+            ; store reversed integer back into eax
+            ; ecx has the number of digits
+            mov eax, 0
+            mov dword[temp] , 1
+            _storeToEaxReverseIntegerLoop:
+                pop edx; pop the remainder
+                
+                ; save eax for later
+                push eax
+                ; mov the remiander to eax for multilpying
+                mov eax, edx
+                mov ebx , dword[temp]
+                mul ebx ; multiply the remainder by temp counter
+                
+                ; save reminder for later
+                push eax
+                ; multiply temp counter by 10
+                mov eax , dword[temp]
+                mov ebx , 10
+                mul ebx
+                mov dword[temp] , eax
+
+                ; add the remainder to eax
+                pop ebx ; retriving reminder
+                pop eax ; retriving eax
+                add eax, ebx
+
+                
+
+                sub ecx, 1; decrement the counter
+                cmp ecx, 0
+                jne _storeToEaxReverseIntegerLoop
+            
+            ret
+
+        ; input eax register  to integer
+        ; output print integer at eax
+        printIntegerBackwards:
+            
+            _printIntegerBackwardsLoop:
+
+                ; eax has the integer to be printed backwards
+                mov ebx, 10
+                mov edx, 0  
+                div ebx
+
+                push eax; save quotient for later
+                mov eax, edx
+                call printOneDigitInteger
+                
+
+
+
+                ; restore the quotient
+                pop eax
+                cmp eax, 0
+                jne _printIntegerBackwardsLoop
+            ret
+                
+         ; input eax register as a pointer tso the one digit integer
+        ; output convert the integer to a character and print it out
+        printOneDigitInteger:
+  
+            add eax , 30h
+            mov dword[temp] , 0
+            add dword[temp], eax
+            mov eax,4
+            mov ebx, 1
+            mov ecx, temp  
+            mov edx, 1
+            int 80h
+            ret
 
         printNewLine:
                     ; printing new line
