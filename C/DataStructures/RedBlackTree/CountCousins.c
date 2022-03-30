@@ -1,3 +1,10 @@
+/*
+
+In a binomial heap H, two nodes are cousins of each other if they are in the same binomial tree
+T of H but have different parents such that their parents are siblings.
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
