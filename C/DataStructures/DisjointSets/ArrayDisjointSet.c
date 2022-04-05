@@ -5,7 +5,6 @@
 struct node
 {
     int data;
-    int exists;
     int index;
     int rank;
     struct node * next;
@@ -87,7 +86,7 @@ struct node * find_set_path_compression(struct node * container , int data, int 
     // and return the parent
     else
     {
-        struct node * parent = find_set(container,indexed_node->data, cnt);
+        struct node * parent = find_set_path_compression(container,indexed_node->data, cnt);
         indexed_node->data = parent->index;
         return parent;
     }   
