@@ -1,7 +1,7 @@
 section .data
     msg1 db "Enter String ",10,0
-    msg2 db "Enter Word to search ",10,0
-    msg3 db "Enter Word to replace the searched word with ",10,0
+    msg2 db "The smallest word is : ",10,0
+    msg3 db "The largest word is : ",10,0
 
 
   
@@ -15,7 +15,7 @@ section .bss
 
     temp : resd 1
     string_end : resb 1
-    string_len : resb 1
+    string_len : resd 1
     bool : resb 1
     smallest : resd 1
     largest : resd 1
@@ -30,14 +30,25 @@ section .text
         mov edi, string1
         call read_2D_sentance
         mov esi, string1
-        ;call smallest_word
+
+        pushad
+        mov esi, msg2
+        call print_string
+        popad
+
         call find_smallest_length
-        add dword[smallest], 30h
-        mov eax, 4
-        mov ebx, 1
-        mov ecx, smallest
-        mov edx, 1
-        int 80h
+        mov eax, dword[smallest]
+        call print_word_with_length
+
+        pushad
+        mov esi, msg3
+        call print_string
+        popad
+
+        call find_largest_length
+        mov eax, dword[largest]
+        call print_word_with_length
+        
         
 
 
@@ -45,20 +56,137 @@ section .text
 
         call exit
 
+
+; eax contains length of word to be printed
+print_word_with_length:
+    pushad
+    push dword[temp]
+    print_word_with_length_loop:
+        push esi
+        
+        call string_length
+        
+        cmp dword[string_len], eax
+        pop esi
+        je print_word_with_length_end
+        
+
+       
+
+
+
+
+
+        add esi, 50
+        cmp byte[esi], -1
+        je print_word_with_length_end_not_found
+
+
+    jmp print_word_with_length_loop
+    
+    print_word_with_length_end_not_found:
+        pop dword[temp]
+        popad
+        ret
+    print_word_with_length_end:
+        call print_string
+        call print_new_line
+        pop dword[temp]
+        popad
+        ret
+
+
+
+
+
+find_largest_length:
+    pushad
+    push dword[temp]
+    mov dword[largest], 0
+    find_largest_loop:
+        push esi
+        
+        call string_length
+        
+        ; cmp dword[string_len], 0
+        ; je find_largest_length_end
+        mov ecx, dword[largest]
+        cmp dword[string_len], ecx
+
+        jg set_largest
+        set_largest_ret:
+        ; pushad
+        ; add dword[string_len], 30h
+        ; mov eax, 4
+        ; mov ebx, 1
+        ; mov ecx, string_len
+        ; mov edx, 1
+        ; int 80h
+        ; popad
+
+
+
+
+
+        pop esi
+        add esi, 50
+        cmp byte[esi], -1
+        je find_largest_length_end
+
+
+    jmp find_largest_loop
+    set_largest:
+        ; cmp dword[string_len], 0 
+        ; je set_largest_skip
+        mov ecx, dword[string_len]
+        mov dword[largest], ecx
+
+        ; set_largest_skip:
+        jmp set_largest_ret
+
+    find_largest_length_end:
+        pop dword[temp]
+        popad
+        ret
+
+
+
+
+
+
+
+
+
+
+
 find_smallest_length:
     pushad
     push dword[temp]
-    mov ecx, 9999
+    mov dword[smallest], 9999
     find_smallest_loop:
         push esi
         
         call string_length
         
-        cmp dword[string_len], 0
-        je find_smallest_length_end
+        ; cmp dword[string_len], 0
+        ; je find_smallest_length_end
+        mov ecx, dword[smallest]
         cmp dword[string_len], ecx
+
         jl set_smallest
         set_smallest_ret:
+        ; pushad
+        ; add dword[string_len], 30h
+        ; mov eax, 4
+        ; mov ebx, 1
+        ; mov ecx, string_len
+        ; mov edx, 1
+        ; int 80h
+        ; popad
+
+
+
+
 
         pop esi
         add esi, 50
@@ -68,12 +196,23 @@ find_smallest_length:
 
     jmp find_smallest_loop
     set_smallest:
+        ; cmp dword[string_len], 0 
+        ; je set_smallest_skip
         mov ecx, dword[string_len]
-        jmp set_smallest_ret
-    find_smallest_length_end:
         mov dword[smallest], ecx
+
+        ; set_smallest_skip:
+        jmp set_smallest_ret
+
+    find_smallest_length_end:
         pop dword[temp]
         popad
+        ret
+
+
+
+
+
 match_word :
 
     ; take a word and match it with another word
@@ -328,5 +467,3 @@ exit :
     mov ebx, 0
     int 80h
     ret
-    
-    
