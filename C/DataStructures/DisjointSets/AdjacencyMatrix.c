@@ -8,7 +8,7 @@ int * take_in_adj_matrix( int n)
     {
         for(int j = 0; j<n; j++)
         {
-            scanf("%d",(matrix + i*n + j*sizeof(int)));
+            scanf("%d",(matrix + i*sizeof(int[n]) + j*sizeof(int)));
         }
     }
     return matrix;
@@ -22,7 +22,7 @@ void print_adj_matrix( int * matrix,int n)
     {
         for(int j = 0; j<n; j++)
         {
-            printf("%d", *(matrix + i*n + j*sizeof(int)));
+            printf("%d", *(matrix + i*sizeof(int[n]) + j*sizeof(int)));
         }
         printf("\n");
     }
@@ -37,7 +37,7 @@ void print_adj_list( int * matrix,int n)
         printf("%d ", i);
         for(int j = 0; j<n; j++)
         {
-           if(*(matrix + i*n + j*sizeof(int)) )printf("%d ",j );
+           if(*(matrix + i*sizeof(int[n]) + j*sizeof(int)) )printf("%d ",j );
         }
         printf("\n");
     }
