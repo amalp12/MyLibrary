@@ -54,7 +54,7 @@ struct set_node * create_set_container_array(int upperbound)
     struct set_node * temp;
     for(int i = 0; i<upperbound; i++)
     {
-        temp = get_node(container,i);
+        temp = &container[i];
         temp->data = -1;
         temp->index = i;
         temp->rank = 0;
@@ -96,7 +96,7 @@ void insert(struct node ** head, int u, int v, int w)
 void make_set( struct set_node  * container , int data)
 {
 
-    struct set_node * indexed_node = get_node(container,data);
+    struct set_node * indexed_node = &container[data];
     if(indexed_node->rank == 0)
     {
         indexed_node ->rank = 1;
@@ -400,6 +400,7 @@ struct node_container_list
     struct node * nod;
     struct node_container_list * next;
 };
+
 void insert_into_list(struct node_container_list * * head, struct node * nod, int* visited_arr)
 {
     if(visited_arr[nod->v]==1 && visited_arr[nod->u]==1)return;
@@ -424,6 +425,7 @@ void insert_into_list(struct node_container_list * * head, struct node * nod, in
     }
     temp->next = new_node;
 }
+
 struct node_container_list * min_cost_node_not_visited(struct node_container_list * * head )
 {
     struct node_container_list * temp= (*head);
@@ -536,7 +538,7 @@ void insertionSort(struct node  * * arr, int n)
 
 struct node * *adj_list_to_arr(struct node * * adjacency_list, int n, int num_edges )
 {
-    struct node  * * arr = (struct node **) malloc(sizeof(struct node*)*n);
+    struct node  * * arr = (struct node **) malloc(sizeof(struct node*)*num_edges);
     int index =0;
     struct node * temp;
     for(int i = 0 ; i < n ; i++)
@@ -557,7 +559,7 @@ struct node * *adj_list_to_arr(struct node * * adjacency_list, int n, int num_ed
 
 struct set_node * find_set_path_compression(struct set_node * container , int data)
 {
-    struct set_node * indexed_node = get_node(container,data);
+    struct set_node * indexed_node = &container[data];
 
     if(indexed_node->rank==0) return NULL;
     // if the value is -1 then it is a singleton element
