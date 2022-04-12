@@ -24,17 +24,17 @@ struct node * create_set_container_array()
     struct node * temp;
     for(int i = 0; i<upperbound; i++)
     {
-        temp = get_node(container,i);
-        temp->data = -1;
-        temp->index = i;
-        temp->rank = 0;
+        
+        container[i].data = -1;
+        container[i].index = i;
+        container[i].rank = 0;
     }
     return container;
 }
 void make_set( struct node  * container , int data, int print)
 {
 
-    struct node * indexed_node = get_node(container,data);
+    struct node * indexed_node = &container[data];
     if(indexed_node->rank == 0)
     {
         indexed_node ->rank = 1;
@@ -49,7 +49,7 @@ void make_set( struct node  * container , int data, int print)
 struct node * find_set(struct node * container , int data, int * cnt)
 {
     (*cnt)++;
-    struct node * indexed_node = get_node(container,data);
+    struct node * indexed_node = &container[data];
 
     if(indexed_node->rank==0) return NULL;
     // if the value is -1 then it is a singleton element
@@ -72,7 +72,7 @@ struct node * find_set(struct node * container , int data, int * cnt)
 struct node * find_set_path_compression(struct node * container , int data, int * cnt)
 {
     (*cnt)++;
-    struct node * indexed_node = get_node(container,data);
+    struct node * indexed_node = &container[data];
 
     if(indexed_node->rank==0) return NULL;
     // if the value is -1 then it is a singleton element
